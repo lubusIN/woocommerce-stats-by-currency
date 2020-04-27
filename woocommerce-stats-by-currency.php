@@ -135,7 +135,7 @@ add_action( 'woocommerce_after_dashboard_status_widget', 'wsbc_add_stats' );
  */
 
 function wsbc_required_plugins() {
-	$activated = (array) get_option( 'active_plugins', array() );
+	$activated = apply_filters( 'active_plugins', (array) get_option( 'active_plugins', array() ) );
 	$required  = array(
 		'woocommerce/woocommerce.php',
 		'woocommerce-product-price-based-on-countries/woocommerce-product-price-based-on-countries.php'
@@ -143,51 +143,14 @@ function wsbc_required_plugins() {
 
 	$required_plugins_activated = count( array_intersect($activated, $required) ) == count( $required );
 
-    if ( !$required_plugins_activated  ) { ?>
+    if ( !$required_plugins_activated  ) {
    
-        <?php
-        $style          = '<style type="text/css">
-                                .wp-die-message {
-                                    border: 1px solid #ccd0d4;
-                                    border-left: solid 5px #dc3232;
-                                    padding: 12px 0 12px 25px;
-                                }
-                                .button {
-                                    display: inline-block;
-                                    text-decoration: none;
-                                    font-size: 13px;
-                                    line-height: 2.15384615;
-                                    min-height: 30px;
-                                    margin: 0;
-                                    padding: 0 10px;
-                                    cursor: pointer;
-                                    border-width: 1px;
-                                    border-style: solid;
-                                    -webkit-appearance: none;
-                                    border-radius: 3px;
-                                    white-space: nowrap;
-                                    box-sizing: border-box;
-                                }
-                                .primary {
-                                    background: #007cba;
-                                    border-color: #007cba;
-                                    color: #fff;
-                                    text-decoration: none;
-                                    text-shadow: none;
-                                }
-                                .primary:hover {
-                                    background: #0071a1;
-                                    border-color: #0071a1;
-                                    color: #fff;
-                                }
-                            </style>';
-        $warning_logo   = '<svg xmlns="http://www.w3.org/2000/svg" width="54px" height="54px" viewBox="0 0 64 64"><defs><linearGradient gradientTransform="matrix(1.31117 0 0 1.30239 737.39 159.91)" gradientUnits="userSpaceOnUse" id="0" y2="-.599" x2="0" y1="45.47"><stop stop-color="#ffc515"/><stop offset="1" stop-color="#ffd55b"/></linearGradient></defs><g transform="matrix(.85714 0 0 .85714-627.02-130.8)"><path d="m797.94 212.01l-25.607-48c-.736-1.333-2.068-2.074-3.551-2.074-1.483 0-2.822.889-3.569 2.222l-25.417 48c-.598 1.185-.605 2.815.132 4 .737 1.185 1.921 1.778 3.404 1.778h51.02c1.483 0 2.821-.741 3.42-1.926.747-1.185.753-2.667.165-4" fill="url(#0)"/><path d="m-26.309 18.07c-1.18 0-2.135.968-2.135 2.129v12.82c0 1.176.948 2.129 2.135 2.129 1.183 0 2.135-.968 2.135-2.129v-12.82c0-1.176-.946-2.129-2.135-2.129zm0 21.348c-1.18 0-2.135.954-2.135 2.135 0 1.18.954 2.135 2.135 2.135 1.181 0 2.135-.954 2.135-2.135 0-1.18-.952-2.135-2.135-2.135z" transform="matrix(1.05196 0 0 1.05196 796.53 161.87)" fill="#000" stroke="#40330d" fill-opacity=".75"/></g></svg>';
-        $msg_text       = '<p>Sorry, This plugin requires <strong>WooCommerce</strong> and <strong>WooCommerce Price Based on Country</strong> plugins to work. Learn how to install <strong>WooCommerce Stats By Currency</strong> in the <a href="https://lubus.in/blog/woocommerce-stats-by-currency#guide" target="_blank">guide</a>.</p>';
-		$plugins_link   = sprintf( '<a class="button primary" href="%s">Install Plugins</a>', admin_url('plugins.php') );
-		$dashboard_link = sprintf( '<a class="button" href="%s">Dashboard</a>', admin_url() );
-        $msg            = sprintf( '%s %s %s %s %s', $style, $warning_logo, $msg_text, $plugins_link, $dashboard_link );
+        ob_start();
+            include 'includes/view/notice.php';
+            $message_html = ob_get_contents();
+        ob_end_clean();
         
-        wp_die( $msg );
+        wp_die( $message_html );
     }
 }
 register_activation_hook( __FILE__, 'wsbc_required_plugins' );
