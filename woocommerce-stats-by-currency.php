@@ -58,7 +58,7 @@ function wsbc_get_base_currency() {
 function wsbc_get_installed_currencies() {
 	$installed_currencies = array();
 
-	foreach (WCPBC()->get_regions() as $region) {		
+	foreach ( WCPBC()->get_regions() as $region ) {
 		$installed_currencies[] = $region['currency'];
 	}
 
@@ -66,25 +66,31 @@ function wsbc_get_installed_currencies() {
 }
 
  /**
- * Get sales report data.
- * @return object
- */
+  * Get sales report data.
+  *
+  * @return object
+  */
 function get_sales_report_data_by_currency( $currency ) {
 
-	add_filter( 'woocommerce_reports_get_order_report_data_args', function( $args) use($currency){
-		
-		$args['where_meta'] =  array(
-			'relation' => 'OR',
+	add_filter(
+		'woocommerce_reports_get_order_report_data_args',
+		function( $args ) use ( $currency ) {
+
+			$args['where_meta'] = array(
+				'relation' => 'OR',
 				array(
 					'type'       => 'meta',
 					'meta_key'   => array( '_order_currency' ),
 					'meta_value' => $currency,
 					'operator'   => 'LIKE',
 				),
-		);
+			);
 
-		return $args;
-	}, 10, 2 );
+			return $args;
+		},
+		10,
+		2
+	);
 
 	$sales_by_date                 = new WC_Report_Sales_By_Date();
 	$sales_by_date->start_date     = strtotime( date( 'Y-m-01', current_time( 'timestamp' ) ) );
@@ -102,28 +108,28 @@ function get_sales_report_data_by_currency( $currency ) {
  */
 function wsbc_add_stats() {
 	if ( current_user_can( 'view_woocommerce_reports' ) ) {
-		// For base currency 
+		// For base currency
 		$base_currency = wsbc_get_base_currency();
-		$sales = get_sales_report_data_by_currency( $base_currency );
+		$sales         = get_sales_report_data_by_currency( $base_currency );
 		?>
 			<li class="sales-this-month sales-this-month-$base_currency">
 				<a href="#">
-					<?php printf( __( "<strong>%s</strong>net sales this month in %s", 'woocommerce' ), wc_price( $sales->net_sales, array( 'currency' => $base_currency ) ), $base_currency ); ?>
+					<?php printf( __( '<strong>%1$s</strong>net sales this month in %2$s', 'woocommerce' ), wc_price( $sales->net_sales, array( 'currency' => $base_currency ) ), $base_currency ); ?>
 				</a>
 			</li>
 		<?php
 		// For additional zone base pricing
 		foreach ( wsbc_get_installed_currencies() as $currency ) {
-			$sales =  get_sales_report_data_by_currency( $currency );
+			$sales = get_sales_report_data_by_currency( $currency );
 			?>
 				<li class="sales-this-month sales-this-month-$currency">
 					<a href="#">
-						<?php printf( __( "<strong>%s</strong>net sales this month in %s", 'woocommerce' ), wc_price( $sales->net_sales, array( 'currency' => $currency ) ), $currency ); ?>
+						<?php printf( __( '<strong>%1$s</strong>net sales this month in %2$s', 'woocommerce' ), wc_price( $sales->net_sales, array( 'currency' => $currency ) ), $currency ); ?>
 					</a>
 				</li>
 			<?php
 		}
 	}
-	
+
 }
 add_action( 'woocommerce_after_dashboard_status_widget', 'wsbc_add_stats' );
