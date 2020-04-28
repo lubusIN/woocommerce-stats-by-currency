@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WooCommerce Stats By Currency
  * Plugin URI: https://lubus.in
- * Description: Add multicurrency stats on dashboard.
+ * Description: WooCommerce Stats By Currency is WordPress plugin by Lubus that shows you your WooCommerce stats based on your location at your own WordPress Dashboard.
  * Author: ajitbohra
  * Author URI: https://lubus.in
  * Version: 1.0.0
