@@ -1,0 +1,22 @@
+{
+    "name": "woocommerce-stats-by-currency",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "wp-env": "wp-env"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lubusIN/woocommerce-stats-by-currency.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/lubusIN/woocommerce-stats-by-currency/issues"
+    },
+    "homepage": "https://github.com/lubusIN/woocommerce-stats-by-currency#readme",
+    "devDependencies": {
+        "@wordpress/env": "^1.2.0"
+    }
+}
