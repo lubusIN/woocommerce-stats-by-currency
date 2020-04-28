@@ -143,7 +143,6 @@ add_action( 'woocommerce_after_dashboard_status_widget', 'wsbc_add_stats' );
 function wsbc_required_plugins() {
 	$activated = apply_filters( 'active_plugins', (array) get_option( 'active_plugins', array() ) );
 	$required  = array(
-		'woocommerce/woocommerce.php',
 		'woocommerce-product-price-based-on-countries/woocommerce-product-price-based-on-countries.php'
 	);
 

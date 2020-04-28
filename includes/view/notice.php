@@ -36,7 +36,7 @@ $pluginpage = admin_url('plugins.php');
     }
 </style>
 <div class="wsbc-notice">
-    <p>Sorry, This plugin requires <strong>WooCommerce</strong> and <strong>WooCommerce Price Based on Country</strong> plugins installed and activated to work.</p>
+    <p>Sorry, This plugin requires <strong>WooCommerce Price Based on Country</strong> plugins installed and activated to work.</p>
     <div>
         <?php printf( __( '<a class="button primary" href="%s">Install Plugins</a>', 'wsbc'), $pluginpage ); ?>
         <?php printf( __( '<a class="button" href="%s">Dashboard</a>', 'wsbc'), $adminurl ); ?>
