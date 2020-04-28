@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Notice output 
  * 
