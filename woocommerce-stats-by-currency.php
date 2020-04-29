@@ -133,3 +133,29 @@ function wsbc_add_stats() {
 
 }
 add_action( 'woocommerce_after_dashboard_status_widget', 'wsbc_add_stats' );
+
+/**
+ * Check required plugins
+ *
+ * @return void
+ */
+
+function wsbc_required_plugins() {
+	$activated = apply_filters( 'active_plugins', (array) get_option( 'active_plugins', array() ) );
+	$required  = array(
+		'woocommerce-product-price-based-on-countries/woocommerce-product-price-based-on-countries.php'
+	);
+
+	$required_plugins_activated = count( array_intersect($activated, $required) ) == count( $required );
+
+    if ( !$required_plugins_activated  ) {
+   
+        ob_start();
+            include 'includes/view/notice.php';
+            $message_html = ob_get_contents();
+        ob_end_clean();
+        
+        wp_die( $message_html );
+    }
+}
+register_activation_hook( __FILE__, 'wsbc_required_plugins' );
