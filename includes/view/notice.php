@@ -5,8 +5,8 @@
  * @package WSBC
  */
 
-$adminurl = admin_url();
-$pluginpage = admin_url('plugins.php');
+$dashboard_url = admin_url();
+$plugins_page = admin_url('plugins.php');
 ?>
 
 <style type="text/css">
@@ -37,7 +37,7 @@ $pluginpage = admin_url('plugins.php');
 <div class="wsbc-notice">
     <?php printf( __('<p>Sorry, This plugin requires <strong>WooCommerce Price Based on Country</strong> plugins installed and activated to work.</p>', 'wsbc') ); ?>
     <div>
-        <?php printf( __( '<a class="button primary" href="%s">Install Plugins</a>', 'wsbc'), $pluginpage ); ?>
-        <?php printf( __( '<a class="button" href="%s">Dashboard</a>', 'wsbc'), $adminurl ); ?>
+        <?php printf( __( '<a class="button primary" href="%s">Install Plugins</a>', 'wsbc'), $plugins_page ); ?>
+        <?php printf( __( '<a class="button" href="%s">Dashboard</a>', 'wsbc'), $dashboard_url ); ?>
     </div>
 </div>
